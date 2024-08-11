@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+
+    <contextName>CatchTheDropLogbackSystem</contextName>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+<!--    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>-->
+
+    <springProperty scope="context" name="appName" source="application.name"/>
+    <springProperty scope="context" name="appVersion" source="application.version"/>
+
+    <property name="log.path" value="log"/>
+    <property name="log.maxHistory" value="7"/>
+    <property name="log.maxFileSize" value="10MB"/>
+    <property name="log.totalSizeCap" value="1GB"/>
+    <property name="log.oldColorPattern"
+              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %boldCyan([App: ${appName}, v.${appVersion}]) %yellow(%thread) %green(%logger{64}) %msg%n"/>
+    <property name="log.colorPattern"
+              value="%magenta(%d{dd MMMM HH:mm:ss}) %highlight(%level) %green(%logger{14}.%M\\(\\)\\_%red(:%L) %1()) %msg%n"/>
+
+    <!-- APPENDERS -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/trace_%i.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>256</queueSize>
+        <maxFlushTime>15000</maxFlushTime>
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <appender name="ERRORS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/error_%i.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <maxFileSize>${log.maxFileSize}</maxFileSize>
+            <totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>${log.colorPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- ROOT -->
+    <root>
+        <appender-ref ref="STDOUT" level="DEBUG"/>
+        <appender-ref ref="ASYNC" level="INFO"/>
+        <appender-ref ref="ERRORS" level="ERROR"/>
+    </root>
+
+</configuration>

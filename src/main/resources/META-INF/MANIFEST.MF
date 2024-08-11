@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.8.1
+Built-By: KiraLis39
+Build-Jdk: 22.0.1
+Sealed: true
+Main-Class: ru.ctd.MainClass
+Class-Path: lib/ resources/
+Implementation-Title: Catch the drop
+Implementation-Version: 0.0.1
+Implementation-Vendor-Id: groupId
+Implementation-Vendor: KiraLis39

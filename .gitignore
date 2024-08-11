@@ -1,0 +1,6 @@
+/log
+*.log
+*.png
+*.wav
+/.idea
+/target

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>groupId</groupId>
+    <artifactId>CatchTheDrop</artifactId>
+    <version>1.0.0</version>
+    <name>CatchTheDrop</name>
+
+    <properties>
+        <java.version>22</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+        <!-- log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.15</version>
+        </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>8.0</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- local -->
+        <dependency>
+            <groupId>kuusisto</groupId>
+            <artifactId>TinySound</artifactId>
+            <version>1.0.4</version>
+            <!-- Run the 'install:install-file
+            -Dfile=H:\JavaProj\Games\FreyaTheGame\lib\FoxLib39\fox-tools\fox-tools-6.2.6.jar
+            -DgroupId=FoxLib39 -DartifactId=fox-tools -Dversion=6.2.6 -Dpackaging=jar -DcreateChecksum=true' before -->
+        </dependency>
+        <dependency>
+            <groupId>FoxLib39</groupId>
+            <artifactId>fox-gui</artifactId>
+            <version>6.2.83</version>
+            <!-- Run the 'install:install-file
+            -Dfile=H:\JavaProj\Games\FreyaTheGame\lib\FoxLib39\fox-gui\fox-gui-6.2.82.jar
+            -DgroupId=FoxLib39 -DartifactId=fox-gui -Dversion=6.2.6 -Dpackaging=jar -DcreateChecksum=true' before -->
+        </dependency>
+        <dependency>
+            <groupId>FoxLib39</groupId>
+            <artifactId>fox-tools</artifactId>
+            <version>6.2.82</version>
+            <!-- Run the 'install:install-file
+            -Dfile=H:\JavaProj\Games\FreyaTheGame\lib\FoxLib39\fox-tools\fox-tools-6.2.6.jar
+            -DgroupId=FoxLib39 -DartifactId=fox-tools -Dversion=6.2.6 -Dpackaging=jar -DcreateChecksum=true' before -->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>22</source>
+                    <target>22</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>ru.ctd.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>ru.ctd.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/java</directory>
+            </resource>
+        </resources>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>local_repo</id>
+            <name>local</name>
+            <url>file:\\\\${basedir}\lib\</url>
+        </repository>
+    </repositories>
+</project>

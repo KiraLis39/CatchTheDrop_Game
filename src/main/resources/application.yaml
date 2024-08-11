@@ -1,0 +1,8 @@
+logging:
+  level:
+    fox.builders.FoxFontBuilder: DEBUG
+    fox.player: DEBUG
+
+application:
+  name: CatchTheDrop
+  version: 1.0.0

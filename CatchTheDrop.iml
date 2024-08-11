@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/lib/TinySound.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/FoxLib39.0220.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/sourceCode" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="3228be6f-318b-4cdc-8b8b-a2daf2f7cf0e" />
+  </component>
+</module>
